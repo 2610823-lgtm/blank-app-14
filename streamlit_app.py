@@ -1,6 +1,34 @@
 import streamlit as st
 
-st.title("🎈 My new app")
-st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
+# 1. 데이터 정의
+부위 = ['선택하세요', '손목', '허리', '목', '무릎']
+방법 = ['', '손목 늘리기', '고양이 자세', '목 위 아래 늘리기', '맨몸 스쿼트']
+
+# 2. 앱 타이틀 및 헤더
+st.title('🧘‍♂️ 스트레칭 가이드')
+st.markdown('---')
+
+# 3. 부위 선택 (기존의 번호 입력 방식을 드롭다운 메뉴로 변경)
+선택_이름 = st.selectbox('원하는 스트레칭 부위를 선택하세요:', 부위)
+
+# 사용자가 부위를 선택했을 때의 로직
+if 선택_이름 != '선택하세요':
+    # 선택한 부위의 인덱스 가져오기
+    선택_idx = 부위.index(선택_이름)
+    
+    st.subheader(f'🎯 동작: **{방법[선택_idx]}**')
+    st.info(f'{선택_이름} 스트레칭 동작을 화면을 보고 따라 해보세요!')
+    
+    st.markdown('---')
+    
+    # 4. 동작 완료 여부 질문 (기존의 예/아니오 입력 방식을 라디오 버튼으로 변경)
+    질문 = st.radio('동작을 잘 하셨습니까?', ('선택 안 함', '예', '아니오'), horizontal=True)
+    
+    # 질문 답변에 따른 결과 출력
+    if 질문 == '예':
+        st.success('🎉 성공하셨습니다. 다른 동작도 해보세요!')
+    elif 질문 == '아니오':
+        st.warning('🔄 동작을 다시 한번 시도해 보세요!')
+        
+else:
+    st.write('위의 드롭다운 메뉴에서 부위를 선택하면 스트레칭 가이드가 시작됩니다.')
